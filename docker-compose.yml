@@ -1,0 +1,13 @@
+version: "3"
+
+services:
+  ansible:
+    image: ansible/centos-runner:base
+    container_name: centos-runner
+    privileged: true
+    hostname: centos-runner
+    domainname: docker.local
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    network_mode: bridge
+
