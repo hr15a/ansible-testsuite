@@ -2,12 +2,24 @@ version: "3"
 
 services:
   ansible:
-    image: ansible/centos-runner:base
-    container_name: centos-runner
-    privileged: true
-    hostname: centos-runner
+    image: ansible/centos:remote-runner
+    hostname: ansible
     domainname: docker.local
     volumes:
-      - /sys/fs/cgroup:/sys/fs/cgroup:ro
-    network_mode: bridge
+      - "./example/extra_vars:/extra_vars"
+      - "./example/hosts:/etc/ansible/hosts"
+      - "${VAULT_KEY}:/run/secrets/vault:ro"
+      - ${PROJECT_HOME}:${PLAYBOOK_HOME}
 
+  managed:
+    image: ansible/centos:remote-target
+    hostname: managed
+    domainname: docker.local
+    privileged: true
+    networks:
+      default:
+        aliases:
+          - managed
+          - managed.docker.local
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro

@@ -1,0 +1,4 @@
+---
+# Ansible testing specific variables (override inventory variables)
+foo: bar
+
