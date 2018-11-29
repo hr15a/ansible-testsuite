@@ -1,0 +1,9 @@
+[local]
+controller ansible_connection=local
+
+[remote]
+managed
+
+[unmanaged]
+i-dont-exist
+
